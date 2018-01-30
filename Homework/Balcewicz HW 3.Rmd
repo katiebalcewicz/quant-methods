@@ -65,6 +65,10 @@ step.acer =  stepAIC(lm.acer)
 step.abies = stepAIC(lm.abies)
 ```
 
+```{r}
+summary(step.acer)
+summary(step.abies)
+```
 
 
 
