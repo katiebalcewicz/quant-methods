@@ -1,0 +1,64 @@
+---
+title: "Balcewicz HW 3"
+author: "Katie Balcewicz"
+date: "1/30/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Univariate Assignment
+
+Read in tree data, metadata can be found in: ./data/tree_metadata.txt
+```{r}
+trees = read.csv("https://raw.githubusercontent.com/dmcglinn/quant_methods/gh-pages/data/treedata_subset.csv", 
+                 header = TRUE)
+acer = subset(trees, species == "Acer rubrum")
+abies = subset(trees, species == "Abies fraseri")
+```
+
+Exploratory analysis
+```{r}
+str(acer)
+str(abies)
+```
+
+```{r}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor=3, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) 
+        cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor)
+}
+pairs(acer[,c("cover", "elev", "tci", "streamdist", "disturb", "beers")], 
+      lower.panel = panel.smooth, upper.panel = panel.cor)
+pairs(abies[,c("cover", "elev", "tci", "streamdist", "disturb", "beers")], 
+      lower.panel = panel.smooth, upper.panel = panel.cor)
+```
+
+
+
+```{r}
+lm.acer = lm(cover ~ elev + tci + streamdist + disturb + beers, data = acer)
+summary(lm.acer)
+lm.abies = lm(cover ~ elev + tci + streamdist + disturb + beers, data = abies)
+summary(lm.abies)
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
