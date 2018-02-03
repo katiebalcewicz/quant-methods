@@ -79,9 +79,11 @@ plot(step.acer)
 plot(step.abies)
 ```
 
-    The Acer rubrum model has a multiple r-squared value of 0.04174, indicating that only 4.174% of the variation in cover can be explained by the explanatory variables. The variables that were included in the stepwise regression, and thus the most important variables, are elev, tci, streamdist, and beers. Model diagnostics plots indicate that there are no major violations of the OLS assumptions. 
-    The Abies fraseri model has a multiple r-squared value of 0.5204, indicating that 52.04% of the variation in cover can be explained by the explanatory variables. The variables that were included in the stepwise regression, and thus the most important variables, are elev and tci. Model diagnostics plots indicate that there are no major violatuins of the OLS assumptions.
-    Between the two models, the variance in Abies fraseri cover is much better explained by the data. This is possibly because it is a habitat specialist and there is less variation in the range of habitats for which the model must make predictions. 
+The Acer rubrum model has a multiple r-squared value of 0.04174, indicating that only 4.174% of the variation in cover can be explained by the explanatory variables. The variables that were included in the stepwise regression, and thus the most important variables, are elev, tci, streamdist, and beers. Model diagnostics plots indicate that there are no major violations of the OLS assumptions. 
+
+The Abies fraseri model has a multiple r-squared value of 0.5204, indicating that 52.04% of the variation in cover can be explained by the explanatory variables. The variables that were included in the stepwise regression, and thus the most important variables, are elev and tci. Model diagnostics plots indicate that there are no major violatuins of the OLS assumptions.
+
+Between the two models, the variance in Abies fraseri cover is much better explained by the data. This is possibly because it is a habitat specialist and there is less variation in the range of habitats for which the model must make predictions. 
  
 ## 2. General Linear Model (GLM) with a Poisson error term 
 ```{r}
@@ -108,7 +110,8 @@ anova(step.abies, abies_glm)
 Changing the error distribution greatly reduced the residual sum of squares errors for both models. For the Acer model, it reduded from 2837.66 to 625.28, a difference of 2212.4. For the Abies model, it reduced from 105.99 to 20.055, a reduction of 85.935.
 
 ## 3. Plain english summary
-    The cover of Acer rubrum and Abies fraseri trees can be predicted using orinary least squares regression and more accurately predicted using a generalized linear model with a poisson error term, that is, changing the structure of the model so that it better fits the format of the data. The predictions for Abies fraseri, a habitat specialist with less variation in its predictor and response variables, are more accurate than those for Acer rubrum, a habitat generalist with more variation in its predictor and response variables. It is easier to build a model that predicts for a smaller range of data than a wider range.
+    
+The cover of Acer rubrum and Abies fraseri trees can be predicted using orinary least squares regression and more accurately predicted using a generalized linear model with a poisson error term, that is, changing the structure of the model so that it better fits the format of the data. The predictions for Abies fraseri, a habitat specialist with less variation in its predictor and response variables, are more accurate than those for Acer rubrum, a habitat generalist with more variation in its predictor and response variables. It is easier to build a model that predicts for a smaller range of data than a wider range.
 
 
 
