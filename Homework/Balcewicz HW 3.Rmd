@@ -70,6 +70,10 @@ summary(step.acer)
 summary(step.abies)
 ```
 
+```{r}
+plot(step.acer)
+plot(step.abies)
+```
 
 
 
