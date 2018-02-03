@@ -113,7 +113,11 @@ Changing the error distribution greatly reduced the residual sum of squares erro
     
 The cover of Acer rubrum and Abies fraseri trees can be predicted using orinary least squares regression and more accurately predicted using a generalized linear model with a poisson error term, that is, changing the structure of the model so that it better fits the format of the data. The predictions for Abies fraseri, a habitat specialist with less variation in its predictor and response variables, are more accurate than those for Acer rubrum, a habitat generalist with more variation in its predictor and response variables. It is easier to build a model that predicts for a smaller range of data than a wider range.
 
+## 4. Examine the behavior of the function step()
+```{r}
+step.abies = stepAIC(lm.abies)
+```
 
-
+The step.aic() function starts with the full model and reports the AIC. It then tests each of the models that result from removing a single variable and removing no variables and reports the AIC from each individual model. It chooses the model that had the biggest drop in AIC (lower is better) and repeats. Again, it tests each of the models that result from removing one of the single remaining variables and no variables and chooses the model that has the largest frop in AIC. This repeats until the model that results from removing no variables (the <none> row) is chosen. This is the final model that is returned by the function.
 
 
