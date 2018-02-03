@@ -24,6 +24,10 @@ Exploratory analysis
 str(acer)
 str(abies)
 ```
+```{r}
+hist(acer$cover)
+hist(abies$cover)
+```
 
 ```{r}
 panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor=3, ...)
@@ -75,5 +79,15 @@ plot(step.acer)
 plot(step.abies)
 ```
 
-
+how well does the exploratory model appear to explain cover?
+ * which explanatory variables are the most important?
+ * do model diagnostics indicate any problems with violations of
+ OLS assumptions?
+ * are you able to explain variance in one species better than another, 
+ why might this be the case?
+ 
+    The Acer rubrum model has a multiple r-squared value of 0.04174, indicating that only 4.174% of the variation in cover can be explained by the explanatory variables. The variables that were included in the stepwise regression, and thus the most important variables, are elev, tci, streamdist, and beers. Model diagnostics plots indicate that there are no major violations of the OLS assumptions. 
+    The Abies fraseri model has a multiple r-squared value of 0.5204, indicating that 52.04% of the variation in cover can be explained by the explanatory variables. The variables that were included in the stepwise regression, and thus the most important variables, are elev and tci. Model diagnostics plots indicate that there are no major violatuins of the OLS assumptions.
+    Between the two models, the variance in Abies fraseri cover is much better explained by the data. This is possibly because it is a habitat specialist and there is less variation in the range of habitats for which the model must make predictions. 
+ 
 
