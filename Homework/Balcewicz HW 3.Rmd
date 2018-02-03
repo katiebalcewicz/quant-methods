@@ -120,4 +120,27 @@ step.abies = stepAIC(lm.abies)
 
 The step.aic() function starts with the full model and reports the AIC. It then tests each of the models that result from removing a single variable and removing no variables and reports the AIC from each individual model. It chooses the model that had the biggest drop in AIC (lower is better) and repeats. Again, it tests each of the models that result from removing one of the single remaining variables and no variables and chooses the model that has the largest frop in AIC. This repeats until the model that results from removing no variables (the <none> row) is chosen. This is the final model that is returned by the function.
 
+## 5. Develop a model for the number of species in each site
+```{r, message=FALSE, warning = FALSE}
+library(plyr); library(dplyr);
+unique.plot = ddply(trees, .(plotID), summarise, unique_species = length(unique(spcode)),
+                                                 elev = first(elev),
+                                                 tci = first(tci),
+                                                 streamdist = first(streamdist),
+                                                 disturb = first(disturb),
+                                                 beers = first(beers))
+head(unique.plot, 5)
+```
+
+```{r}
+unique_glm = glm(unique_species ~ elev + tci + streamdist + disturb + beers , 
+               data = unique.plot, family = 'poisson')
+summary(unique_glm)
+unique_r2 = pseudo_r2(unique_glm)
+unique_r2
+```
+
+```{r}
+step_unique = stepAIC(unique_glm)
+```
 
