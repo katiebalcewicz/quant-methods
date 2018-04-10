@@ -1,0 +1,44 @@
+---
+title: "Balcewicz HW 4"
+author: "Katie Balcewicz"
+date: "2/8/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Multivariate Models Assignment
+
+Load the necessary packages, import the data, and read the metadata
+```{r}
+library(vegan)
+data(dune)
+dune
+data(dune.env)
+head(dune.env, 5)
+?dune
+```
+
+## 1. Conduct an indirect ordination on the dune plant community. 
+```{r}
+dune_mds = metaMDS(dune)
+plot(dune_mds, type='n')
+ text(dune_mds, 'sp', cex=.5)
+ # generate vector of colors 
+ color_vect = rev(topo.colors(6))[-1]
+ points(dune_mds, 'sites', pch=19, 
+        col=color_vect[dune.env$Moisture])
+ legend('topright', paste("Moisture =", 1:5, sep=''), 
+        col=color_vect, pch=19)
+```
+This NMDS plot shows a trend in moisture related to NMDS axis 1. The species are generally clustered by moisture as NMDS1 increases.
+
+
+## 2. Carry out a direct ordination using CCA
+
+## 3. Discussion
+
+
+
