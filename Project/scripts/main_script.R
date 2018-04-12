@@ -63,8 +63,7 @@ for(i in 1:nrow(RATE.sims))
 #Find most similar religions to a given religion
 most_sim = function(sim_df, rel_name, n)
 {
-  rel_name = gsub("[ [:punct:]]", "" , rel_name)
-  sim_df = arrange(sim_df, rel_name)
+  sim_df  = sim_df[order(sim_df[,rel_name]),]
   return(rownames(sim_df)[1:n])
 }
 
