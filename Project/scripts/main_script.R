@@ -2,7 +2,8 @@
 library(plyr)
 
 codebook = read.csv2("./Project/data/codebook.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-religion_data = read.csv2("./Project/data/religion_data.csv", header = TRUE, sep = ",", na.strings = "", dec = ".")
+religion_data = read.csv2("./Project/data/religion_data.csv", header = TRUE, sep = ",", na.strings = "", dec = ".", 
+                          fileEncoding="UTF-8-BOM")
 religion_data[is.na(religion_data)] = 0
 
 #Select subsets of data - CNG, ADH, RATE
@@ -69,12 +70,11 @@ most_sim = function(sim_df, rel_name, n)
 
 most_sim(CNG.sims, "Zoroastrian", 5)
 
-
-
-
-
-
-
-
-
 ##corplot
+
+
+
+
+
+
+
