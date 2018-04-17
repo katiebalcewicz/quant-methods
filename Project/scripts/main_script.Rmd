@@ -1,30 +1,56 @@
-#main_script.R
+---
+title: "Main Script"
+author: "Katie Balcewicz"
+date: "4/17/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+load necessary packages
+```{r}
 library(plyr)
 library(corrplot)
+```
 
-#read in codebook
+read in codebook
+```{r}
 codebook = read.csv2("./Project/data/codebook.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+```
 
-#read in county level data
+read in county level data
+```{r}
 county_data = read.csv2("./Project/data/religion_data.csv", header = TRUE, sep = ",", na.strings = "", dec = ".", 
                           fileEncoding="UTF-8-BOM")
+```
 
-#read in state level data
+read in state level data
+```{r}
 state_data = read.csv2("./Project/data/state_data.csv", header = TRUE, sep = ",", na.strings = "", dec = ".", 
                        fileEncoding="UTF-8-BOM")
+```
 
-#replace NAs with 0s
+replace NAs with 0s
+```{r}
 county_data[is.na(county_data)] = 0
 state_data[is.na(state_data)] = 0
+```
 
-#Select subsets of data - CNG (number of congregations), ADH (number of adherents), RATE (rate of adherents)
+Select subsets of data - CNG (number of congregations), ADH (number of adherents), RATE (rate of adherents)
+First select subsets of variables that match regex patterns
+```{r}
 CNG.var = subset(codebook, grepl("CNG$", variable_names))$variable_names
 CNG.names = subset(codebook, grepl("CNG$", variable_names))$religion_name
 ADH.var = subset(codebook, grepl("ADH$", variable_names))$variable_names
 ADH.names = subset(codebook, grepl("ADH$", variable_names))$religion_name
 RATE.var = subset(codebook, grepl("RATE$", variable_names))$variable_names
 RATE.names = subset(codebook, grepl("RATE$", variable_names))$religion_name
+```
 
+Then select those variables from the full data frames
+```{r}
 CNG.data.county = county_data[,CNG.var]
 ADH.data.county = county_data[,ADH.var]
 RATE.data.county = county_data[,RATE.var]
@@ -32,16 +58,19 @@ RATE.data.county = county_data[,RATE.var]
 CNG.data.state = state_data[,CNG.var]
 ADH.data.state = state_data[,ADH.var]
 RATE.data.state = state_data[,RATE.var]
-  
-  
-#Define Cosine Similarity function
+```
+
+Define Cosine Similarity function
+```{r}
 cosine.similarity = function(X, Y)
 {
   return(t(as.matrix(X)) %*% as.matrix(Y)/
            (norm(as.matrix(X), type = "2")*norm(as.matrix(Y), type = "2")))
 }
+```
 
-#CNG county level similarity matrix
+CNG county level similarity matrix
+```{r}
 CNG.sims.county = data.frame(matrix(data = NA, nrow = length(CNG.var), ncol = length(CNG.var)))
 rownames(CNG.sims.county) = make.names(CNG.names)
 colnames(CNG.sims.county) = make.names(CNG.names)
@@ -52,8 +81,10 @@ for(i in 1:nrow(CNG.sims.county))
     CNG.sims.county[i,j] = cosine.similarity(CNG.data.county[,i], CNG.data.county[,j])
   }
 }
+```
 
-#ADH county level similarity matrix
+ADH county level similarity matrix
+```{r}
 ADH.sims.county = data.frame(matrix(data = NA, nrow = length(ADH.var), ncol = length(ADH.var)))
 rownames(ADH.sims.county) = make.names(ADH.names)
 colnames(ADH.sims.county) = make.names(ADH.names)
@@ -64,8 +95,10 @@ for(i in 1:nrow(ADH.sims.county))
     ADH.sims.county[i,j] = cosine.similarity(ADH.data.county[,i], ADH.data.county[,j])
   }
 }
+```
 
-#RATE county level similarity matrix
+RATE county level similarity matrix
+```{r}
 RATE.sims.county = data.frame(matrix(data = NA, nrow = length(RATE.var), ncol = length(RATE.var)))
 rownames(RATE.sims.county) = make.names(RATE.names)
 colnames(RATE.sims.county) = make.names(RATE.names)
@@ -76,8 +109,10 @@ for(i in 1:nrow(RATE.sims.county))
     RATE.sims.county[i,j] = cosine.similarity(RATE.data.county[,i], RATE.data.county[,j])
   }
 }
+```
 
-#CNG state level similarity matrix
+CNG state level similarity matrix
+```{r}
 CNG.sims.state = data.frame(matrix(data = NA, nrow = length(CNG.var), ncol = length(CNG.var)))
 rownames(CNG.sims.state) = make.names(CNG.names)
 colnames(CNG.sims.state) = make.names(CNG.names)
@@ -88,8 +123,10 @@ for(i in 1:nrow(CNG.sims.state))
     CNG.sims.state[i,j] = cosine.similarity(CNG.data.state[,i], CNG.data.state[,j])
   }
 }
+```
 
-#ADH state level similarity matrix
+ADH state level similarity matrix
+```{r}
 ADH.sims.state = data.frame(matrix(data = NA, nrow = length(ADH.var), ncol = length(ADH.var)))
 rownames(ADH.sims.state) = make.names(ADH.names)
 colnames(ADH.sims.state) = make.names(ADH.names)
@@ -100,8 +137,10 @@ for(i in 1:nrow(ADH.sims.state))
     ADH.sims.state[i,j] = cosine.similarity(ADH.data.state[,i], ADH.data.state[,j])
   }
 }
+```
 
-#RATE state level similarity matrix
+RATE state level similarity matrix
+```{r}
 RATE.sims.state = data.frame(matrix(data = NA, nrow = length(RATE.var), ncol = length(RATE.var)))
 rownames(RATE.sims.state) = make.names(RATE.names)
 colnames(RATE.sims.state) = make.names(RATE.names)
@@ -112,40 +151,49 @@ for(i in 1:nrow(RATE.sims.state))
     RATE.sims.state[i,j] = cosine.similarity(RATE.data.state[,i], RATE.data.state[,j])
   }
 }
+```
 
-#Find most similar religions to a given religion based on a similarity matrix
+Find most similar religions to a given religion based on a similarity matrix
+```{r}
 most_sim = function(sim_df, rel_name, n)
 {
   sim_df  = sim_df[order(sim_df[,rel_name]),]
   return(rownames(sim_df)[1:n])
 }
+```
 
-#Test most_sim function and compare across different similarity matrices
+Test most_sim function and compare across different similarity matrices
+```{r}
 most_sim(CNG.sims.county, "Zoroastrian", 5)
 most_sim(ADH.sims.county, "Zoroastrian", 5)
 most_sim(RATE.sims.county, "Zoroastrian", 5)
 most_sim(CNG.sims.state, "Zoroastrian", 5)
 most_sim(ADH.sims.state, "Zoroastrian", 5)
 most_sim(RATE.sims.state, "Zoroastrian", 5)
+```
 
+Compare Presbyterian Churches
+```{r}
 most_sim(RATE.sims.county, make.names("Presbyterian Church in America"), 5)
 most_sim(RATE.sims.county, make.names("Presbyterian Church (U.S.A.)"), 5)
+```
 
-##Corrplot - Correlation plot of major groups
+Corrplot - Correlation plot of major groups
+```{r}
 major.religions.county = RATE.sims.county[c("All.denominations.groups", "Evangelical.Protestant",
                                             "Mainline.Protestant", "Catholic", "Orthodox", "Other"), 
                                           c("All.denominations.groups", "Evangelical.Protestant",
                                             "Mainline.Protestant", "Catholic", "Orthodox", "Other")]
+corrplot(as.matrix(major.religions.county), method = "circle", type = "upper")
+```
+
+```{r}
 major.religions.state = RATE.sims.state[c("All.denominations.groups", "Evangelical.Protestant",
                                           "Mainline.Protestant", "Catholic", "Orthodox", "Other"), 
                                         c("All.denominations.groups", "Evangelical.Protestant",
                                           "Mainline.Protestant", "Catholic", "Orthodox", "Other")]
-
-corrplot(as.matrix(major.religions.county), method = "circle", type = "upper")
 corrplot(as.matrix(major.religions.state), method = "circle", type = "upper")
-
-
-
+```
 
 
 

@@ -1,2 +1,3 @@
 # quant-methods
-Spring 2018 Quantitative Methods
+
+This repository contains the work for Dr. Daniel Mcgilnn's Spring 2018 Quantitative Methods class. The Project directory contains the scripts and data for the final project. Using the data from the Association of Religion Data Archives U.S. Religion Census 2010 (http://www.thearda.com/Archive/Files/Descriptions/RCMSCY10.asp), this project compares the geographic similarity of religions. The similarity of religions is compared using Cosine Similarity, which gives a similaruty score between 0 and 1 for two vectors in positive space. Two vectors of county or state level religion representaion are compared using this technique to give similarity scores for each of the 236 religions in the dataset. This allows us to find the n most similar religions to a given religion. The included scripts also parse the codebook into a more useable format. 
