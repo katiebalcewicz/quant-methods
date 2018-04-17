@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = '~/quant-methods')
 ```
 
 load necessary packages
@@ -172,10 +173,24 @@ most_sim(ADH.sims.state, "Zoroastrian", 5)
 most_sim(RATE.sims.state, "Zoroastrian", 5)
 ```
 
-Compare Presbyterian Churches
+Define two_sim function to get the cosine similarity of two religions based on a given similarity matrix
 ```{r}
-most_sim(RATE.sims.county, make.names("Presbyterian Church in America"), 5)
-most_sim(RATE.sims.county, make.names("Presbyterian Church (U.S.A.)"), 5)
+two_sim = function(sim_df, rel1_name, rel2_name)
+{
+  sim = sim_df[rel1_name, rel2_name]
+  return(sim)
+}
+```
+
+Compare Presbyterian Churches using two_sim
+```{r}
+two_sim(CNG.sims.county, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(ADH.sims.county, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(RATE.sims.county, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(CNG.sims.state, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(ADH.sims.state, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(RATE.sims.state, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+
 ```
 
 Corrplot - Correlation plot of major groups

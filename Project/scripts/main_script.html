@@ -265,19 +265,25 @@ for(i in 1:nrow(RATE.sims.state))
 ## [3] &quot;Central.Yearly.Meeting.of.Friends&quot;         
 ## [4] &quot;Moravian.Church.in.America.Alaska.Province&quot;
 ## [5] &quot;Convention.of.Original.Free.Will.Baptists&quot;</code></pre>
-<p>Compare Presbyterian Churches</p>
-<pre class="r"><code>most_sim(RATE.sims.county, make.names(&quot;Presbyterian Church in America&quot;), 5)</code></pre>
-<pre><code>## [1] &quot;Amana.Church.Society&quot;                      
-## [2] &quot;Ambassadors.Amish.Mennonite&quot;               
-## [3] &quot;Midwest.Beachy.Amish.Mennonite&quot;            
-## [4] &quot;Tampico.Amish.Mennonite&quot;                   
-## [5] &quot;Moravian.Church.in.America.Alaska.Province&quot;</code></pre>
-<pre class="r"><code>most_sim(RATE.sims.county, make.names(&quot;Presbyterian Church (U.S.A.)&quot;), 5)</code></pre>
-<pre><code>## [1] &quot;Moravian.Church.in.America.Alaska.Province&quot;         
-## [2] &quot;Albanian.Orthodox.Diocese.of.America&quot;               
-## [3] &quot;Orthodox.Church.in.America&quot;                         
-## [4] &quot;Congregational.Methodist.Church&quot;                    
-## [5] &quot;Primitive.Baptists..Eastern.District.Association.of&quot;</code></pre>
+<p>Define two_sim function to get the cosine similarity of two religions based on a given similarity matrix</p>
+<pre class="r"><code>two_sim = function(sim_df, rel1_name, rel2_name)
+{
+  sim = sim_df[rel1_name, rel2_name]
+  return(sim)
+}</code></pre>
+<p>Compare Presbyterian Churches using two_sim</p>
+<pre class="r"><code>two_sim(CNG.sims.county, make.names(&quot;Presbyterian Church in America&quot;), make.names(&quot;Presbyterian Church (U.S.A.)&quot;))</code></pre>
+<pre><code>## [1] 0.6816494</code></pre>
+<pre class="r"><code>two_sim(ADH.sims.county, make.names(&quot;Presbyterian Church in America&quot;), make.names(&quot;Presbyterian Church (U.S.A.)&quot;))</code></pre>
+<pre><code>## [1] 0.5414267</code></pre>
+<pre class="r"><code>two_sim(RATE.sims.county, make.names(&quot;Presbyterian Church in America&quot;), make.names(&quot;Presbyterian Church (U.S.A.)&quot;))</code></pre>
+<pre><code>## [1] 0.1825469</code></pre>
+<pre class="r"><code>two_sim(CNG.sims.state, make.names(&quot;Presbyterian Church in America&quot;), make.names(&quot;Presbyterian Church (U.S.A.)&quot;))</code></pre>
+<pre><code>## [1] 0.7821289</code></pre>
+<pre class="r"><code>two_sim(ADH.sims.state, make.names(&quot;Presbyterian Church in America&quot;), make.names(&quot;Presbyterian Church (U.S.A.)&quot;))</code></pre>
+<pre><code>## [1] 0.7524114</code></pre>
+<pre class="r"><code>two_sim(RATE.sims.state, make.names(&quot;Presbyterian Church in America&quot;), make.names(&quot;Presbyterian Church (U.S.A.)&quot;))</code></pre>
+<pre><code>## [1] 0.6355755</code></pre>
 <p>Corrplot - Correlation plot of major groups</p>
 <pre class="r"><code>major.religions.county = RATE.sims.county[c(&quot;All.denominations.groups&quot;, &quot;Evangelical.Protestant&quot;,
                                             &quot;Mainline.Protestant&quot;, &quot;Catholic&quot;, &quot;Orthodox&quot;, &quot;Other&quot;), 

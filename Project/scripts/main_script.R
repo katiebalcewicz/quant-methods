@@ -120,6 +120,15 @@ most_sim = function(sim_df, rel_name, n)
   return(rownames(sim_df)[1:n])
 }
 
+#Return Cosine similarity between two religions
+two_sim = function(sim_df, rel1_name, rel2_name)
+{
+  sim = sim_df[rel1_name, rel2_name]
+  return(sim)
+}
+
+
+
 #Test most_sim function and compare across different similarity matrices
 most_sim(CNG.sims.county, "Zoroastrian", 5)
 most_sim(ADH.sims.county, "Zoroastrian", 5)
@@ -128,8 +137,13 @@ most_sim(CNG.sims.state, "Zoroastrian", 5)
 most_sim(ADH.sims.state, "Zoroastrian", 5)
 most_sim(RATE.sims.state, "Zoroastrian", 5)
 
-most_sim(RATE.sims.county, make.names("Presbyterian Church in America"), 5)
-most_sim(RATE.sims.county, make.names("Presbyterian Church (U.S.A.)"), 5)
+#Test two_sim function on two presbyterians across all similarity matrices
+two_sim(CNG.sims.county, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(ADH.sims.county, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(RATE.sims.county, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(CNG.sims.state, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(ADH.sims.state, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
+two_sim(RATE.sims.state, make.names("Presbyterian Church in America"), make.names("Presbyterian Church (U.S.A.)"))
 
 ##Corrplot - Correlation plot of major groups
 major.religions.county = RATE.sims.county[c("All.denominations.groups", "Evangelical.Protestant",
